@@ -767,6 +767,34 @@ footer {
 /* honeypot */
 .hp-field { position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none; }
 
+.skip-link {
+  position: absolute;
+  left: 14px;
+  top: -48px;
+  z-index: 1000;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: top 0.18s ease;
+}
+.skip-link:focus { top: 14px; }
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -1466,6 +1494,8 @@ footer {
 </style>
 </head>
 <body>
+<a class="skip-link" href="#mainContent">Skip to main content</a>
+<div id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 <div class="container">
 
   <!-- BRAND HEADER -->
@@ -1501,22 +1531,24 @@ footer {
     </div>
   </header>
 
+  <main id="mainContent">
+
   <!-- TABS -->
   <div class="tabs-wrap no-sel" role="tablist" aria-label="Tools">
     <div class="tabs">
-      <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="downloader">
+      <button class="tab-btn active" id="tab-downloader" type="button" role="tab" aria-selected="true" aria-controls="panel-downloader" tabindex="0" data-tab="downloader">
         <svg class="tab-ico" viewBox="0 0 24 24"><path d="M12 3v14M5 12l7 7 7-7M5 21h14"/></svg>
         <span>Download</span>
       </button>
-      <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="user">
+      <button class="tab-btn" id="tab-user" type="button" role="tab" aria-selected="false" aria-controls="panel-user" tabindex="-1" data-tab="user">
         <svg class="tab-ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
         <span>User Video</span>
       </button>
-      <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="comments">
+      <button class="tab-btn" id="tab-comments" type="button" role="tab" aria-selected="false" aria-controls="panel-comments" tabindex="-1" data-tab="comments">
         <svg class="tab-ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         <span>Comment Show</span>
       </button>
-      <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="profile">
+      <button class="tab-btn" id="tab-profile" type="button" role="tab" aria-selected="false" aria-controls="panel-profile" tabindex="-1" data-tab="profile">
         <svg class="tab-ico" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         <span>Profile Info</span>
       </button>
@@ -1524,7 +1556,7 @@ footer {
   </div>
 
   <!-- ============ TAB 1: DOWNLOADER ============ -->
-  <div class="tab-panel active" id="panel-downloader" role="tabpanel">
+  <div class="tab-panel active" id="panel-downloader" role="tabpanel" aria-labelledby="tab-downloader">
 
   <!-- SEARCH / INPUT -->
   <div class="search-card">
@@ -1578,6 +1610,10 @@ footer {
     <button class="aux-btn" id="pasteBtn" type="button" aria-label="Paste from clipboard">
       <span class="ico">📋</span>
       <span>Paste Link</span>
+    </button>
+    <button class="aux-btn" id="clearBtn" type="button" aria-label="Clear saved inputs">
+      <span class="ico">✕</span>
+      <span>Clear</span>
     </button>
     <button class="aux-btn" id="guideBtn" type="button" aria-expanded="false" aria-controls="guidePanel">
       <span class="ico">?</span>
@@ -1695,7 +1731,7 @@ footer {
   </div><!-- /tab-panel downloader -->
 
   <!-- ============ TAB 2: USER VIDEOS ============ -->
-  <div class="tab-panel" id="panel-user" role="tabpanel">
+  <div class="tab-panel" id="panel-user" role="tabpanel" aria-labelledby="tab-user" hidden>
     <div class="search-card">
       <label class="search-label" for="userInput">
         TikTok Username <span class="req">*</span>
@@ -1704,7 +1740,7 @@ footer {
         <div class="input-group">
           <span class="prefix" aria-hidden="true">@</span>
           <input id="userInput" type="text"
-                 placeholder="username বা @username"
+                 placeholder="username, @username অথবা TikTok profile URL"
                  autocomplete="off" autocorrect="off" autocapitalize="off"
                  spellcheck="false" maxlength="100"
                  aria-label="TikTok username"
@@ -1752,7 +1788,7 @@ footer {
   </div><!-- /tab-panel user -->
 
   <!-- ============ TAB 3: COMMENT SCRAPER ============ -->
-  <div class="tab-panel" id="panel-comments" role="tabpanel">
+  <div class="tab-panel" id="panel-comments" role="tabpanel" aria-labelledby="tab-comments" hidden>
     <div class="search-card">
       <label class="search-label" for="commentInput">
         TikTok Video URL <span class="req">*</span>
@@ -1807,7 +1843,7 @@ footer {
   </div><!-- /tab-panel comments -->
 
   <!-- ============ TAB 4: PROFILE INFO ============ -->
-  <div class="tab-panel" id="panel-profile" role="tabpanel">
+  <div class="tab-panel" id="panel-profile" role="tabpanel" aria-labelledby="tab-profile" hidden>
     <div class="search-card">
       <label class="search-label" for="profileInput">
         TikTok Username <span class="req">*</span>
@@ -1816,9 +1852,9 @@ footer {
         <div class="input-group">
           <span class="prefix" aria-hidden="true">@</span>
           <input id="profileInput" type="text"
-                 placeholder="username বা @username"
+                 placeholder="username, @username অথবা TikTok profile URL"
                  autocomplete="off" autocorrect="off" autocapitalize="off"
-                 spellcheck="false" maxlength="30"
+                 spellcheck="false" maxlength="120"
                  aria-label="TikTok username for profile info"
                  data-lpignore="true"/>
         </div>
@@ -1829,7 +1865,7 @@ footer {
       </div>
       <div class="input-hint">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-        <span>টিকটক ইউজারনেম দিন — প্রোফাইল, স্ট্যাটস, একাউন্ট এেজ, শপ <strong>সমস্ত ডিটেইল ডেটা</strong> দেখানো হবে।</span>
+        <span>টিকটক ইউজারনেম বা প্রোফাইল URL দিন — প্রোফাইল, স্ট্যাটস, একাউন্ট এেজ, শপ <strong>সমস্ত ডিটেইল ডেটা</strong> দেখানো হবে।</span>
       </div>
       <div class="rate-notice no-sel">
         <svg class="lock-ico" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 11h14v10H5zM8 11V7a4 4 0 018 0v4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1984,6 +2020,8 @@ footer {
     </div><!-- /profile-result-card -->
   </div><!-- /tab-panel profile -->
 
+  </main>
+
   <!-- SHARE -->
   <div class="share-row no-sel" aria-label="Share RX Downloader">
     <button class="share-btn sb-x" data-share="x" type="button" aria-label="Share on X" title="Share on X">
@@ -2032,12 +2070,21 @@ footer {
   const PROFILE_API_BASE = 'https://tiktok-checker-api.onrender.com';
   const API_PROFILE      = PROFILE_API_BASE + '/tiktok/';
 
+  const STORAGE_KEYS = Object.freeze({
+    activeTab: 'rxdl.activeTab',
+    url: 'rxdl.url',
+    user: 'rxdl.user',
+    comment: 'rxdl.comment',
+    profile: 'rxdl.profile'
+  });
+
   const els = {
     // tab 1 — single downloader
     urlInput:   g('urlInput'),
     dlBtn:      g('downloadBtn'),
     demoBtn:    g('demoBtn'),
     pasteBtn:   g('pasteBtn'),
+    clearBtn:   g('clearBtn'),
     guideBtn:   g('guideBtn'),
     guidePanel: g('guidePanel'),
     hp:         g('hp_field'),
@@ -2078,6 +2125,7 @@ footer {
     profileResult:   g('profileResult'),
     profileHp:       g('hp_profile'),
     pCopyBtn:        g('pCopyBtn'),
+    announcer:       g('srStatus'),
   };
 
   let lastData = null;
@@ -2087,6 +2135,77 @@ footer {
     return String(s == null ? '' : s)
       .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
       .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function announce(msg){
+    if (!els.announcer || !msg) return;
+    els.announcer.textContent = '';
+    window.setTimeout(() => { els.announcer.textContent = String(msg); }, 20);
+  }
+
+  function remember(key, value){
+    try {
+      if (value) localStorage.setItem(key, value);
+      else localStorage.removeItem(key);
+    } catch(e){}
+  }
+
+  function restoreRemembered(key){
+    try { return localStorage.getItem(key) || ''; } catch(e) { return ''; }
+  }
+
+  function setBusy(btn, busy, busyText){
+    if (!btn) return;
+    if (busy) {
+      if (!btn.dataset.origHtml) btn.dataset.origHtml = btn.innerHTML;
+      btn.disabled = true;
+      const span = btn.querySelector('span');
+      if (span && busyText) span.textContent = busyText;
+      return;
+    }
+    btn.disabled = false;
+    if (btn.dataset.origHtml) {
+      btn.innerHTML = btn.dataset.origHtml;
+      delete btn.dataset.origHtml;
+    }
+  }
+
+  async function fetchJson(url, options){
+    options = options || {};
+    const timeout = options.timeout || 45000;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeout);
+    try {
+      const res = await fetch(url, {
+        method: 'GET',
+        signal: ctrl.signal,
+        headers: { 'Accept': 'application/json' },
+        credentials: 'omit',
+        referrerPolicy: 'no-referrer',
+        mode: 'cors',
+        cache: 'no-store'
+      });
+      const text = await res.text();
+      if (!res.ok) throw new Error('HTTP_STATUS_' + res.status);
+      if (text.length > 250000) throw new Error('RESPONSE_TOO_LARGE');
+      try { return JSON.parse(text); }
+      catch(e) { throw new Error('INVALID_JSON'); }
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  function extractTikTokUsername(raw){
+    raw = String(raw || '').trim();
+    if (!raw) return '';
+    if (/^https?:\/\//i.test(raw)) {
+      try {
+        const u = new URL(raw);
+        const m = u.pathname.match(/^\/@?([^\/?#]+)/);
+        if (m && m[1]) raw = m[1];
+      } catch(e){}
+    }
+    return cleanUsername(raw).replace(/\/+$/, '');
   }
 
   function isValidTikTokUrl(u){
@@ -2104,23 +2223,36 @@ footer {
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>' +
       '<span>' + escapeHtml(msg) + '</span>';
     els.error.classList.add('show');
+    announce(msg);
   }
   function clearError(){ els.error.classList.remove('show'); els.error.innerHTML = ''; }
-  function clearResult(){ els.result.classList.remove('show'); els.demoBanner.classList.remove('show'); }
-  function showLoading(on){ els.loading.classList.toggle('show', !!on); els.dlBtn.disabled = !!on; }
+  function clearResult(){
+    els.result.classList.remove('show');
+    els.demoBanner.classList.remove('show');
+    if (els.videoPlayer) {
+      try { els.videoPlayer.pause(); } catch(e){}
+      els.videoPlayer.removeAttribute('src');
+      try { els.videoPlayer.load(); } catch(e){}
+    }
+  }
+  function showLoading(on){
+    els.loading.classList.toggle('show', !!on);
+    setBusy(els.dlBtn, !!on, 'Loading…');
+  }
 
   // ═══ main fetch ═══
   async function doDownload(){
     clearError();
     clearResult();
 
-    // honeypot
     if (els.hp && els.hp.value) {
       showError('Bot detection triggered. Please reload and try again.');
       return;
     }
 
     const raw = (els.urlInput.value || '').trim();
+    remember(STORAGE_KEYS.url, raw);
+
     if (!raw) { showError('Please paste a TikTok video URL first.'); els.urlInput.focus(); return; }
     if (!isValidTikTokUrl(raw)) { showError('That does not look like a valid TikTok URL.'); els.urlInput.focus(); return; }
 
@@ -2128,19 +2260,7 @@ footer {
     const apiUrl = API_DOWNLOAD + '?url=' + encodeURIComponent(raw);
 
     try {
-      const ctrl = new AbortController();
-      const timer = setTimeout(()=>ctrl.abort(), 45000);
-
-      const res = await fetch(apiUrl, { method: 'GET', signal: ctrl.signal, headers: { 'Accept': 'application/json' } });
-      clearTimeout(timer);
-
-      if (!res.ok) {
-        showLoading(false);
-        showError('Server returned status ' + res.status + '. Try again in a few seconds.');
-        return;
-      }
-
-      const data = await res.json();
+      const data = await fetchJson(apiUrl, { timeout: 45000 });
       showLoading(false);
 
       if (!data || data.success === false) {
@@ -2150,10 +2270,15 @@ footer {
       }
 
       renderResult(data, false);
+      announce('Video details loaded successfully.');
     } catch (err) {
       showLoading(false);
-      if (err && err.name === 'AbortError') {
+      if (!navigator.onLine) {
+        showError('You appear to be offline. Check your internet connection and try again.');
+      } else if (err && err.name === 'AbortError') {
         showError('Request timed out. The free backend may be sleeping — please try again.');
+      } else if (err && err.message && /^HTTP_STATUS_/.test(err.message)) {
+        showError('Server returned status ' + err.message.replace('HTTP_STATUS_', '') + '. Try again in a few seconds.');
       } else {
         showError('Network error: ' + (err && err.message ? err.message : 'unknown'));
       }
@@ -2291,6 +2416,7 @@ footer {
     clearError();
     const sampleUrl = 'https://vt.tiktok.com/ZSC1ynktf/';
     els.urlInput.value = sampleUrl;
+    remember(STORAGE_KEYS.url, sampleUrl);
     doDownload();
   }
 
@@ -2301,10 +2427,31 @@ footer {
       const txt = await navigator.clipboard.readText();
       if (!txt) { showError('Clipboard is empty.'); return; }
       els.urlInput.value = txt.trim();
+      remember(STORAGE_KEYS.url, txt.trim());
       els.urlInput.focus();
+      announce('Link pasted from clipboard.');
     } catch(e) {
       showError('Cannot read clipboard — please paste manually (Ctrl/Cmd+V).');
     }
+  }
+
+  function clearAllFields(){
+    [els.urlInput, els.userInput, els.commentInput, els.profileInput].forEach(function(input){
+      if (input) input.value = '';
+    });
+    [STORAGE_KEYS.url, STORAGE_KEYS.user, STORAGE_KEYS.comment, STORAGE_KEYS.profile].forEach(function(key){
+      remember(key, '');
+    });
+    clearError();
+    clearResult();
+    clearBox(els.userError);
+    clearBox(els.commentError);
+    clearBox(els.profileError);
+    els.userResult.classList.remove('show');
+    els.commentResult.classList.remove('show');
+    els.profileResult.classList.remove('show');
+    announce('Saved inputs cleared.');
+    els.urlInput.focus();
   }
 
   // ═══ guide toggle ═══
@@ -2339,6 +2486,7 @@ footer {
       const span = btn.querySelector('span');
       const orig = span.textContent;
       span.textContent = 'Copied!';
+      announce('Report copied to clipboard.');
       setTimeout(()=>{ btn.classList.remove('copied'); span.textContent = orig; }, 1600);
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -2368,7 +2516,7 @@ footer {
       case 'whatsapp': url = 'https://wa.me/?text=' + encodeURIComponent(title + ' ' + pageUrl); break;
       case 'telegram': url = 'https://t.me/share/url?url=' + encodeURIComponent(pageUrl) + '&text=' + encodeURIComponent(title); break;
       case 'copylink':
-        if (navigator.clipboard) navigator.clipboard.writeText(pageUrl).then(()=>flashShare(t)).catch(()=>{});
+        if (navigator.clipboard) navigator.clipboard.writeText(pageUrl).then(()=>{ flashShare(t); announce('Page link copied to clipboard.'); }).catch(()=>{});
         return;
     }
     if (url) window.open(url, '_blank', 'noopener,noreferrer,width=620,height=520');
@@ -2382,11 +2530,18 @@ footer {
   // ═══ bindings ═══
   els.dlBtn.addEventListener('click', doDownload, { passive: true });
   els.urlInput.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') { e.preventDefault(); doDownload(); } });
+  els.urlInput.addEventListener('input', ()=>remember(STORAGE_KEYS.url, els.urlInput.value.trim()));
   els.demoBtn.addEventListener('click', showSample, { passive: true });
   els.pasteBtn.addEventListener('click', pasteFromClipboard, { passive: true });
+  els.clearBtn.addEventListener('click', clearAllFields, { passive: true });
   els.guideBtn.addEventListener('click', toggleGuide, { passive: true });
   els.copyBtn.addEventListener('click', copyReport, { passive: true });
   document.querySelector('.share-row').addEventListener('click', onShare);
+
+  els.urlInput.value     = restoreRemembered(STORAGE_KEYS.url);
+  els.userInput.value    = restoreRemembered(STORAGE_KEYS.user);
+  els.commentInput.value = restoreRemembered(STORAGE_KEYS.comment);
+  els.profileInput.value = restoreRemembered(STORAGE_KEYS.profile);
 
   // Focus input on load (desktop)
   if (matchMedia && !matchMedia('(pointer: coarse)').matches) {
@@ -2396,21 +2551,46 @@ footer {
   // ═════════════════════════════════════════════════════════════
   // TAB SWITCHING
   // ═════════════════════════════════════════════════════════════
-  const tabBtns   = document.querySelectorAll('.tab-btn');
-  const tabPanels = document.querySelectorAll('.tab-panel');
-  tabBtns.forEach(function(btn){
+  const tabBtns   = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+  const tabPanels = Array.prototype.slice.call(document.querySelectorAll('.tab-panel'));
+
+  function activateTab(key, opts){
+    opts = opts || {};
+    const nextBtn = tabBtns.find(btn => btn.getAttribute('data-tab') === key) || tabBtns[0];
+    if (!nextBtn) return;
+    const nextKey = nextBtn.getAttribute('data-tab');
+    tabBtns.forEach((btn) => {
+      const active = btn === nextBtn;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      btn.setAttribute('tabindex', active ? '0' : '-1');
+    });
+    tabPanels.forEach((panel) => {
+      const active = panel.id === ('panel-' + nextKey);
+      panel.classList.toggle('active', active);
+      panel.hidden = !active;
+    });
+    remember(STORAGE_KEYS.activeTab, nextKey);
+    if (opts.focus) nextBtn.focus();
+  }
+
+  tabBtns.forEach(function(btn, index){
     btn.addEventListener('click', function(){
-      const key = btn.getAttribute('data-tab');
-      tabBtns.forEach(b => {
-        const active = b === btn;
-        b.classList.toggle('active', active);
-        b.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-      tabPanels.forEach(p => {
-        p.classList.toggle('active', p.id === ('panel-' + key));
-      });
+      activateTab(btn.getAttribute('data-tab'), { focus: true });
+    });
+    btn.addEventListener('keydown', function(e){
+      let nextIndex = index;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextIndex = (index + 1) % tabBtns.length;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') nextIndex = (index - 1 + tabBtns.length) % tabBtns.length;
+      else if (e.key === 'Home') nextIndex = 0;
+      else if (e.key === 'End') nextIndex = tabBtns.length - 1;
+      else return;
+      e.preventDefault();
+      activateTab(tabBtns[nextIndex].getAttribute('data-tab'), { focus: true });
     });
   });
+
+  activateTab(restoreRemembered(STORAGE_KEYS.activeTab) || 'downloader');
 
   // ═════════════════════════════════════════════════════════════
   // SHARED HELPERS
@@ -2420,6 +2600,7 @@ footer {
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>' +
       '<span>' + escapeHtml(msg) + '</span>';
     box.classList.add('show');
+    announce(msg);
   }
   function clearBox(box){ box.classList.remove('show'); box.innerHTML = ''; }
 
@@ -2460,7 +2641,9 @@ footer {
     els.userResult.classList.remove('show');
     els.videoGrid.innerHTML = '';
 
-    const username = cleanUsername(els.userInput.value);
+    const username = extractTikTokUsername(els.userInput.value);
+    els.userInput.value = username;
+    remember(STORAGE_KEYS.user, username);
     if (!username) { showBox(els.userError, 'Please enter a TikTok username.'); els.userInput.focus(); return; }
     if (!/^[\w.\-]{2,50}$/.test(username)) {
       showBox(els.userError, 'Invalid username format. Use letters, numbers, dots, or underscores only.');
@@ -2468,25 +2651,15 @@ footer {
     }
 
     els.userLoading.classList.add('show');
-    els.userFetchBtn.disabled = true;
+    setBusy(els.userFetchBtn, true, 'Fetching…');
 
     const apiUrl = API_USER + '?username=' + encodeURIComponent(username);
 
     try {
-      const ctrl = new AbortController();
-      const timer = setTimeout(()=>ctrl.abort(), 60000);
-
-      const res = await fetch(apiUrl, { method: 'GET', signal: ctrl.signal, headers: { 'Accept': 'application/json' } });
-      clearTimeout(timer);
+      const data = await fetchJson(apiUrl, { timeout: 60000 });
       els.userLoading.classList.remove('show');
-      els.userFetchBtn.disabled = false;
+      setBusy(els.userFetchBtn, false);
 
-      if (!res.ok) {
-        showBox(els.userError, 'Server returned status ' + res.status + '. Try again in a few seconds.');
-        return;
-      }
-
-      const data = await res.json();
       if (!data || data.success === false) {
         const msg = (data && (data.error || data.message)) || 'Could not load videos for this user.';
         showBox(els.userError, msg);
@@ -2494,11 +2667,16 @@ footer {
       }
 
       renderUserVideos(username, Array.isArray(data.videos) ? data.videos : []);
+      announce('User video list loaded.');
     } catch(err) {
       els.userLoading.classList.remove('show');
-      els.userFetchBtn.disabled = false;
-      if (err && err.name === 'AbortError') {
+      setBusy(els.userFetchBtn, false);
+      if (!navigator.onLine) {
+        showBox(els.userError, 'You appear to be offline. Check your internet connection and try again.');
+      } else if (err && err.name === 'AbortError') {
         showBox(els.userError, 'Request timed out. The free backend may be sleeping — please try again.');
+      } else if (err && err.message && /^HTTP_STATUS_/.test(err.message)) {
+        showBox(els.userError, 'Server returned status ' + err.message.replace('HTTP_STATUS_', '') + '. Try again in a few seconds.');
       } else {
         showBox(els.userError, 'Network error: ' + (err && err.message ? err.message : 'unknown'));
       }
@@ -2607,39 +2785,36 @@ footer {
     els.commentList.innerHTML = '';
 
     const raw = (els.commentInput.value || '').trim();
+    remember(STORAGE_KEYS.comment, raw);
     if (!raw) { showBox(els.commentError, 'Please paste a TikTok video URL first.'); els.commentInput.focus(); return; }
     if (!isValidTikTokUrl(raw)) { showBox(els.commentError, 'That does not look like a valid TikTok URL.'); els.commentInput.focus(); return; }
 
     els.commentLoading.classList.add('show');
-    els.commentFetchBtn.disabled = true;
+    setBusy(els.commentFetchBtn, true, 'Loading…');
 
     const apiUrl = API_COMMENTS + '?url=' + encodeURIComponent(raw);
 
     try {
-      const ctrl = new AbortController();
-      const timer = setTimeout(()=>ctrl.abort(), 60000);
-
-      const res = await fetch(apiUrl, { method: 'GET', signal: ctrl.signal, headers: { 'Accept': 'application/json' } });
-      clearTimeout(timer);
+      const data = await fetchJson(apiUrl, { timeout: 60000 });
       els.commentLoading.classList.remove('show');
-      els.commentFetchBtn.disabled = false;
+      setBusy(els.commentFetchBtn, false);
 
-      if (!res.ok) {
-        showBox(els.commentError, 'Server returned status ' + res.status + '. Try again in a few seconds.');
-        return;
-      }
-      const data = await res.json();
       if (!data || data.success === false) {
         const msg = (data && (data.error || data.message)) || 'Could not load comments.';
         showBox(els.commentError, msg);
         return;
       }
       renderComments(Array.isArray(data.comments) ? data.comments : []);
+      announce('Comments loaded successfully.');
     } catch(err) {
       els.commentLoading.classList.remove('show');
-      els.commentFetchBtn.disabled = false;
-      if (err && err.name === 'AbortError') {
+      setBusy(els.commentFetchBtn, false);
+      if (!navigator.onLine) {
+        showBox(els.commentError, 'You appear to be offline. Check your internet connection and try again.');
+      } else if (err && err.name === 'AbortError') {
         showBox(els.commentError, 'Request timed out. The free backend may be sleeping — please try again.');
+      } else if (err && err.message && /^HTTP_STATUS_/.test(err.message)) {
+        showBox(els.commentError, 'Server returned status ' + err.message.replace('HTTP_STATUS_', '') + '. Try again in a few seconds.');
       } else {
         showBox(els.commentError, 'Network error: ' + (err && err.message ? err.message : 'unknown'));
       }
@@ -2961,52 +3136,26 @@ footer {
     clearBox(els.profileError);
     els.profileResult.classList.remove('show');
 
-    // Honeypot
     if (els.profileHp && els.profileHp.value) {
       showBox(els.profileError, 'Bot detection triggered. Please reload and try again.');
       return;
     }
 
-    const username = profileSanitizeUsername(els.profileInput.value);
+    const username = profileSanitizeUsername(extractTikTokUsername(els.profileInput.value));
+    els.profileInput.value = username;
+    remember(STORAGE_KEYS.profile, username);
     const err = profileValidateUsername(username);
     if (err) { showBox(els.profileError, err); els.profileInput.focus(); return; }
 
     els.profileLoading.classList.add('show');
-    els.profileFetchBtn.disabled = true;
+    setBusy(els.profileFetchBtn, true, 'Checking…');
     lastProfileData = null;
 
-    const ctrl  = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 45000);
-
     try {
-      const res = await fetch(API_PROFILE + encodeURIComponent(username), {
-        method: 'GET',
-        signal: ctrl.signal,
-        headers: { 'Accept': 'application/json' },
-        credentials: 'omit',
-        referrerPolicy: 'no-referrer',
-        mode: 'cors',
-        cache: 'no-store'
-      });
-      clearTimeout(timer);
+      const data = await fetchJson(API_PROFILE + encodeURIComponent(username), { timeout: 45000 });
       els.profileLoading.classList.remove('show');
-      els.profileFetchBtn.disabled = false;
+      setBusy(els.profileFetchBtn, false);
 
-      if (!res.ok) {
-        showBox(els.profileError, 'Server returned status ' + res.status + '. Try again in a few seconds.');
-        return;
-      }
-      const ct = res.headers.get('content-type') || '';
-      if (!ct.includes('application/json')) {
-        showBox(els.profileError, 'Unexpected response format from server.');
-        return;
-      }
-      const text = await res.text();
-      if (text.length > 250000) {
-        showBox(els.profileError, 'Response too large.');
-        return;
-      }
-      const data = JSON.parse(text);
       if (!data || typeof data !== 'object') {
         showBox(els.profileError, 'Invalid response.');
         return;
@@ -3017,12 +3166,16 @@ footer {
       }
       lastProfileData = data;
       profileRender(data, username);
+      announce('Profile report loaded successfully.');
     } catch(e) {
-      clearTimeout(timer);
       els.profileLoading.classList.remove('show');
-      els.profileFetchBtn.disabled = false;
-      if (e && e.name === 'AbortError') {
+      setBusy(els.profileFetchBtn, false);
+      if (!navigator.onLine) {
+        showBox(els.profileError, 'You appear to be offline. Check your internet connection and try again.');
+      } else if (e && e.name === 'AbortError') {
         showBox(els.profileError, 'Request timed out. The free backend may be sleeping — please try again.');
+      } else if (e && e.message && /^HTTP_STATUS_/.test(e.message)) {
+        showBox(els.profileError, 'Server returned status ' + e.message.replace('HTTP_STATUS_', '') + '. Try again in a few seconds.');
       } else {
         showBox(els.profileError, 'Network error: ' + ((e && e.message) ? e.message : 'unknown'));
       }
@@ -3086,7 +3239,7 @@ footer {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(txt).then(() => {
           const b = els.pCopyBtn.querySelector('span');
-          if (b) { const orig = b.textContent; b.textContent = 'Copied!'; setTimeout(() => { b.textContent = orig; }, 1600); }
+          if (b) { const orig = b.textContent; b.textContent = 'Copied!'; announce('Profile report copied to clipboard.'); setTimeout(() => { b.textContent = orig; }, 1600); }
         });
         return;
       }
@@ -3101,22 +3254,23 @@ footer {
     try { document.execCommand('copy'); } catch(e){}
     document.body.removeChild(ta);
     const b = els.pCopyBtn.querySelector('span');
-    if (b) { const orig = b.textContent; b.textContent = 'Copied!'; setTimeout(() => { b.textContent = orig; }, 1600); }
+    if (b) { const orig = b.textContent; b.textContent = 'Copied!'; announce('Profile report copied to clipboard.'); setTimeout(() => { b.textContent = orig; }, 1600); }
   }
 
   // ═══ BINDINGS for tab 2 / 3 / 4 ═══
   els.userFetchBtn.addEventListener('click', fetchUserVideos, { passive: true });
   els.userInput.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') { e.preventDefault(); fetchUserVideos(); } });
+  els.userInput.addEventListener('input', ()=>remember(STORAGE_KEYS.user, els.userInput.value.trim()));
 
   els.commentFetchBtn.addEventListener('click', fetchComments, { passive: true });
   els.commentInput.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') { e.preventDefault(); fetchComments(); } });
+  els.commentInput.addEventListener('input', ()=>remember(STORAGE_KEYS.comment, els.commentInput.value.trim()));
 
   els.profileFetchBtn.addEventListener('click', fetchProfileInfo, { passive: true });
   els.profileInput.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') { e.preventDefault(); fetchProfileInfo(); } });
+  els.profileInput.addEventListener('input', ()=>remember(STORAGE_KEYS.profile, els.profileInput.value.trim()));
   els.pCopyBtn.addEventListener('click', profileCopyReport, { passive: true });
 
-  // Freeze a few globals against trivial prototype pollution
-  try { Object.freeze(Object.prototype); Object.freeze(Array.prototype); } catch(e){}
 })();
 </script>
 </body>

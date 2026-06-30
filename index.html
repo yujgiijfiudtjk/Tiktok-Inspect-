@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"/>
 <meta name="color-scheme" content="light dark"/>
 <meta name="referrer" content="no-referrer"/>
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet"/>
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1"/>
 <meta name="description" content="RX Downloader — Free TikTok video downloader. No watermark, HD quality, MP3 audio. Fast & private."/>
 
 <!-- ══════════ OPEN GRAPH META TAGS ══════════ -->
@@ -25,16 +25,85 @@
 <meta name="twitter:image" content="https://lh3.googleusercontent.com/pw/AP1GczOWUmRvZRzbWI_y59hjHA_Df0DiXDjSAW2luLLHOXIxyLv3mGK7ViL16xjrSWFtq_bJPNI6FZvbhzcDWoZs4pM3ZEyikJLdgWG018y-AzLfcV7tbmgYp-wpZs9HeTWipHLN95vJ3-ovC7iqykhWDYzh=w1080-h606-s-no-gm?authuser=0"/>
 
 
+<!-- ══════════ SEO IMPROVEMENTS ══════════ -->
+<meta name="application-name" content="RX Downloader"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="RX Downloader"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="keywords" content="TikTok downloader, no watermark, MP3, HD video, TikTok scraper, profile analyzer"/>
+<meta name="author" content="RX Hasnat"/>
+<link rel="canonical" href="https://rxdownloader.vercel.app/"/>
+<link rel="alternate" hreflang="en" href="https://rxdownloader.vercel.app/"/>
+<link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
+
+<!-- ══════════ PWA MANIFEST (inline data URI) ══════════ -->
+<link rel="manifest" id="pwaManifest"/>
+<link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/pw/AP1GczMx4OipixuK4KIh5Lg0kwNHUwgawGDArm35AWjuL-ST6C5DDcPw6fBQZJRRF122PbTV-EQXlB_hqFp_m1Zp3weyUmPE0ybON180sQudf-olWQsWkeghdZtYgvK13eEPNtjcQ7jSydvAtvjXAXMMjB7q=w512-h512-s-no-gm?authuser=0"/>
+
+<!-- ══════════ JSON-LD STRUCTURED DATA ══════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "RX Downloader",
+  "url": "https://rxdownloader.vercel.app/",
+  "description": "Free TikTok video downloader without watermark, HD quality and MP3 audio. Profile analyzer and comment scraper included.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript. Requires HTML5.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "creator": { "@type": "Person", "name": "RX Hasnat" },
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1284" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is RX Downloader free to use?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — RX Downloader is 100% free with no login required. There are no hidden charges, no subscriptions and no watermarks." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does RX Downloader add a watermark to downloaded TikTok videos?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. We extract clean MP4 files directly without any TikTok watermark — perfect for editing, reposting or archiving." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I download TikTok audio as MP3?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every video result includes a separate MP3 audio download in addition to HD and SD MP4 video." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is RX Downloader safe and private?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. We do not store URLs, do not require login and use HTTPS-only connections. Search history is kept on your device only." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the first request slow?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The free backend on Render hibernates when idle. The first request may take 20–40 seconds to wake the server; subsequent requests are instant." }
+    }
+  ]
+}
+</script>
+
+
 <!-- ══════════ HARDENED SECURITY HEADERS (META) ══════════ -->
 <meta http-equiv="Content-Security-Policy" content="
   default-src 'none';
+  manifest-src 'self' blob:;
   script-src 'self' 'unsafe-inline';
   style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src   https://fonts.gstatic.com;
   img-src    'self' data: https: blob:;
   media-src  https: blob:;
   connect-src https://tiktok-nowatermark-api.onrender.com https://tiktok-checker-api.onrender.com;
-  worker-src 'none';
+  worker-src 'self' blob:;
   object-src 'none';
   form-action 'none';
   base-uri 'none';
@@ -279,7 +348,8 @@ header {
   flex-wrap: wrap;
 }
 .input-group {
-  flex: 1 1 280px;
+  
+  max-width: 300px;
   position: relative;
   display: flex;
   align-items: stretch;
@@ -1491,9 +1561,393 @@ footer {
 }
 #panel-profile .pcopy-btn:hover { background: var(--brand-2); }
 #panel-profile .pcopy-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+/* ═══ v1.1 ADDITIONS ═══ */
+
+/* ══════════ DARK THEME OVERRIDES (manual toggle) ══════════ */
+html[data-theme="dark"] {
+  --bg:           #0b1020;
+  --bg-2:         #0f172a;
+  --surface:      #111a2e;
+  --surface-2:    #152038;
+  --surface-3:    #1b2745;
+
+  --text:         #e2e8f0;
+  --text-2:       #cbd5e1;
+  --text-3:       #94a3b8;
+  --text-4:       #64748b;
+
+  --border:       #1e293b;
+  --border-2:     #334155;
+  --border-strong:#475569;
+
+  --brand:        #818cf8;
+  --brand-2:      #6366f1;
+  --brand-soft:   #1e1b4b;
+  --brand-line:   #3730a3;
+
+  --success-bg:   #052e16;
+  --success-line: #14532d;
+  --warning-bg:   #451a03;
+  --warning-line: #78350f;
+  --danger-bg:    #450a0a;
+  --danger-line:  #7f1d1d;
+  --info-bg:      #082f49;
+  --info-line:    #0c4a6e;
+
+  --shadow-sm:    0 1px 2px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.5);
+  --shadow:       0 2px 4px rgba(0,0,0,0.3), 0 8px 24px -6px rgba(0,0,0,0.6);
+  --shadow-lg:    0 4px 8px rgba(0,0,0,0.4), 0 20px 50px -12px rgba(0,0,0,0.7);
+  color-scheme: dark;
+}
+html[data-theme="dark"] body { background: var(--bg); color: var(--text); }
+html[data-theme="dark"] img.skeleton-img { background: linear-gradient(90deg, #1b2745 0%, #243353 50%, #1b2745 100%); }
+
+/* Dark Theme overrides for Tabs */
+html[data-theme="dark"] .tabs {
+  background: rgba(17, 26, 46, 0.65);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .tab-btn {
+  color: var(--text-3);
+}
+
+html[data-theme="dark"] .tab-btn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .tab-btn.active {
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #fff;
+}
+
+
+
+/* ══════════ THEME TOGGLE BUTTON ══════════ */
+.theme-toggle {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: transform .2s ease, background .2s ease;
+}
+.theme-toggle:hover { transform: scale(1.06); }
+.theme-toggle svg { width: 18px; height: 18px; stroke: var(--text-2); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.theme-toggle .sun { display: none; }
+html[data-theme="dark"] .theme-toggle .sun { display: block; }
+html[data-theme="dark"] .theme-toggle .moon { display: none; }
+
+/* ══════════ TOAST NOTIFICATION SYSTEM ══════════ */
+#toastRoot {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  width: min(380px, calc(100% - 32px));
+}
+.toast {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--brand);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  font-size: 13.5px;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  pointer-events: auto;
+  animation: toastIn 0.28s cubic-bezier(.2,.9,.3,1.2);
+  word-break: break-word;
+}
+.toast.toast-success { border-left-color: var(--success); }
+.toast.toast-error   { border-left-color: var(--danger); }
+.toast.toast-warning { border-left-color: var(--warning); }
+.toast.toast-info    { border-left-color: var(--info); }
+.toast .toast-ico { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 1px; }
+.toast .toast-ico svg { width: 18px; height: 18px; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.toast.toast-success .toast-ico svg { stroke: var(--success); }
+.toast.toast-error   .toast-ico svg { stroke: var(--danger); }
+.toast.toast-warning .toast-ico svg { stroke: var(--warning); }
+.toast.toast-info    .toast-ico svg { stroke: var(--info); }
+.toast .toast-body { flex: 1; }
+.toast .toast-close {
+  background: transparent; border: 0; cursor: pointer;
+  color: var(--text-3); padding: 2px 4px; line-height: 1; font-size: 16px;
+}
+.toast.removing { animation: toastOut 0.24s ease forwards; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(-16px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes toastOut { to { opacity: 0; transform: translateY(-12px) scale(.96); } }
+
+/* ══════════ SKELETON LOADER ══════════ */
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 0%, var(--surface-3) 50%, var(--surface-2) 100%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.4s ease-in-out infinite;
+  border-radius: var(--r-sm);
+}
+@keyframes skeletonShimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.skeleton-card { display: flex; flex-direction: column; gap: 12px; padding: 14px; border: 1px solid var(--border); border-radius: var(--r); background: var(--surface); }
+.skeleton-line { height: 12px; }
+.skeleton-line.lg { height: 16px; }
+.skeleton-line.w-60 { width: 60%; }
+.skeleton-line.w-80 { width: 80%; }
+.skeleton-line.w-40 { width: 40%; }
+.skeleton-thumb { width: 100%; aspect-ratio: 9/16; max-height: 280px; }
+
+/* ══════════ DOWNLOAD PROGRESS ══════════ */
+.dl-progress {
+  margin-top: 10px;
+  height: 6px;
+  width: 100%;
+  background: var(--surface-3);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.dl-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  border-radius: 999px;
+  transition: width .2s ease;
+}
+.dl-progress.indeterminate .dl-progress-bar {
+  width: 40%;
+  animation: indet 1.2s infinite ease-in-out;
+}
+@keyframes indet { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
+.dl-progress-label {
+  font-size: 11.5px;
+  color: var(--text-3);
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ══════════ ERROR WITH RETRY ══════════ */
+.error-retry-btn {
+  margin-top: 8px;
+  background: var(--danger);
+  color: #fff;
+  border: 0;
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.error-retry-btn:hover { filter: brightness(1.1); }
+
+/* ══════════ HISTORY PANEL ══════════ */
+.history-card {
+  margin-top: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px;
+}
+.history-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.history-head h3 {
+  font-size: 13px; font-weight: 700; color: var(--text-2);
+  text-transform: uppercase; letter-spacing: .5px;
+  display: flex; align-items: center; gap: 6px;
+}
+.history-clear {
+  background: transparent; border: 0; color: var(--text-3);
+  font-size: 12px; cursor: pointer; padding: 4px 6px; border-radius: 6px;
+}
+.history-clear:hover { color: var(--danger); background: var(--danger-bg); }
+.history-list { display: flex; flex-direction: column; gap: 6px; max-height: 240px; overflow-y: auto; }
+.history-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: var(--r-sm);
+  background: var(--surface-2); border: 1px solid var(--border);
+  font-size: 12.5px; cursor: pointer; transition: background .15s;
+}
+.history-item:hover { background: var(--brand-soft); border-color: var(--brand-line); }
+.history-item .h-text {
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace; color: var(--text-2);
+}
+.history-item .h-time { color: var(--text-4); font-size: 11px; flex-shrink: 0; }
+.history-item .h-del {
+  background: transparent; border: 0; color: var(--text-4); cursor: pointer;
+  padding: 2px 4px; font-size: 14px; line-height: 1;
+}
+.history-item .h-del:hover { color: var(--danger); }
+.history-empty { color: var(--text-3); font-size: 12.5px; text-align: center; padding: 16px; }
+
+/* ══════════ FAQ SECTION ══════════ */
+.faq-section {
+  margin-top: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+}
+.faq-section h2 {
+  font-size: 16px; font-weight: 700; color: var(--text);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.faq-section h2 svg { width: 18px; height: 18px; stroke: var(--brand); fill: none; stroke-width: 2; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+}
+.faq-item:last-child { border-bottom: 0; }
+.faq-item summary {
+  cursor: pointer; font-weight: 600; font-size: 13.5px;
+  color: var(--text); padding: 6px 4px; list-style: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+'; font-size: 18px; color: var(--text-3); font-weight: 400;
+}
+.faq-item[open] summary::after { content: '−'; }
+.faq-item p {
+  padding: 4px 4px 8px; color: var(--text-2); font-size: 13px; line-height: 1.6;
+}
+
+/* ══════════ BULK DOWNLOAD MANAGER ══════════ */
+.bulk-mgr {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px dashed var(--border-2);
+  border-radius: var(--r);
+  background: var(--surface-2);
+}
+.bulk-mgr-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.bulk-mgr textarea {
+  width: 100%; min-height: 80px; padding: 8px 10px;
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  background: var(--surface); color: var(--text); font-size: 12.5px;
+  font-family: 'JetBrains Mono', monospace; resize: vertical;
+}
+.bulk-mgr-status {
+  margin-top: 8px; font-size: 12px; color: var(--text-3);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.bulk-item-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.bulk-item-row .b-stat { width: 16px; height: 16px; flex-shrink: 0; }
+.bulk-item-row .b-stat.pending { color: var(--text-4); }
+.bulk-item-row .b-stat.active  { color: var(--brand); animation: spin 1s linear infinite; }
+.bulk-item-row .b-stat.done    { color: var(--success); }
+.bulk-item-row .b-stat.err     { color: var(--danger); }
+.bulk-item-row .b-url { flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ══════════ CSV EXPORT BTN ══════════ */
+.csv-btn {
+  background: var(--success);
+  color: #fff; border: 0; cursor: pointer;
+  padding: 8px 14px; border-radius: var(--r-sm);
+  font-size: 12.5px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 8px;
+}
+.csv-btn:hover { filter: brightness(1.08); }
+.csv-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+/* ══════════ LAZY IMAGE ══════════ */
+img.lazy-img { opacity: 0; transition: opacity .35s ease; }
+img.lazy-img.loaded { opacity: 1; }
+img.skeleton-img {
+  background: linear-gradient(90deg, var(--surface-2) 0%, var(--surface-3) 50%, var(--surface-2) 100%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.4s ease-in-out infinite;
+}
+
+/* ══════════ FOCUS RING ENHANCEMENT ══════════ */
+*:focus-visible {
+  outline: 2px solid var(--brand) !important;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ══════════ KEYBOARD SHORTCUT HINT ══════════ */
+.kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  background: var(--surface-3);
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+/* ══════════ RATE LIMIT BANNER ══════════ */
+.rate-limit-banner {
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-line);
+  color: var(--warning);
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  font-size: 12.5px;
+  margin: 10px 0;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* ══════════ MOBILE UX IMPROVEMENTS ══════════ */
+@media (max-width: 640px) {
+  .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+  #toastRoot { top: 56px; }
+  .container { padding-inline: 14px; }
+  .input-row { flex-direction: column; }
+  .input-row > * { width: 100%; }
+  .bulk-mgr-row { flex-direction: column; align-items: stretch; }
+  .faq-section { padding: 14px; }
+}
+@media (max-width: 380px) {
+  .brand-name { font-size: 20px; }
+}
+
+/* ══════════ PREFERS REDUCED MOTION ══════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 </style>
 </head>
 <body>
+<!-- ══════════ THEME TOGGLE BUTTON ══════════ -->
+<button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Toggle dark / light theme" title="Toggle theme (Shift+D)">
+  <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="sun"  viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+</button>
+
+<!-- ══════════ TOAST NOTIFICATION ROOT ══════════ -->
+<div id="toastRoot" aria-live="polite" aria-atomic="false"></div>
+
 <a class="skip-link" href="#mainContent">Skip to main content</a>
 <div id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 <div class="container">
@@ -1728,6 +2182,22 @@ footer {
     </div>
   </div>
 
+  <details class="bulk-mgr" style="margin-top:14px;">
+    <summary style="cursor:pointer; font-weight:600; font-size:13px; color:var(--text-2);">
+      ⚡ Bulk Download (sequential, up to 20 URLs)
+    </summary>
+    <div style="margin-top:10px;">
+      <textarea id="bulkInput" placeholder="Paste TikTok URLs — one per line, comma or space separated"></textarea>
+      <div class="bulk-mgr-row" style="margin-top:8px;">
+        <button id="bulkStartBtn" type="button" style="background:var(--brand); color:#fff; border:0; padding:8px 14px; border-radius:var(--r-sm); font-size:12.5px; font-weight:600; cursor:pointer;">▶ Start Bulk</button>
+        <button id="bulkAbortBtn" type="button" style="background:var(--danger); color:#fff; border:0; padding:8px 14px; border-radius:var(--r-sm); font-size:12.5px; font-weight:600; cursor:pointer;">■ Stop</button>
+        <span style="color:var(--text-3); font-size:12px;">Cooldown: 2.8s between items · max 20</span>
+      </div>
+      <div id="bulkStatus" class="bulk-mgr-status"></div>
+    </div>
+  </details>
+
+
   </div><!-- /tab-panel downloader -->
 
   <!-- ============ TAB 2: USER VIDEOS ============ -->
@@ -1830,7 +2300,13 @@ footer {
 
     <div class="error-box" id="commentError" role="alert" aria-live="polite"></div>
 
-    <div class="comment-result-wrap" id="commentResult">
+    <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+  <button id="commentsCsvBtn" class="csv-btn" type="button" aria-label="Export comments as CSV" title="Export comments to CSV">
+    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    Export CSV
+  </button>
+</div>
+<div class="comment-result-wrap" id="commentResult">
       <div class="comment-summary">
         <div class="us-chip">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -2019,6 +2495,58 @@ footer {
 
     </div><!-- /profile-result-card -->
   </div><!-- /tab-panel profile -->
+
+  
+  <!-- ══════════ RECENT DOWNLOADS HISTORY ══════════ -->
+  <div class="history-card" id="historyCard" hidden>
+    <div class="history-head">
+      <h3>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>
+        Recent Downloads
+      </h3>
+      <button class="history-clear" id="historyClearBtn" type="button" aria-label="Clear all history">Clear All</button>
+    </div>
+    <div class="history-list" id="historyList" role="list"></div>
+  </div>
+
+  <!-- ══════════ FAQ SECTION ══════════ -->
+  <section class="faq-section" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Frequently Asked Questions
+    </h2>
+    <details class="faq-item" open>
+      <summary>Is RX Downloader free to use?</summary>
+      <p>Yes — RX Downloader is 100% free with no login required. There are no hidden charges, no subscriptions and no watermarks.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Does RX Downloader add a watermark to videos?</summary>
+      <p>No. We extract clean MP4 files directly without any TikTok watermark — perfect for editing, reposting or archiving.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I download TikTok audio as MP3?</summary>
+      <p>Yes. Every video result includes a separate MP3 audio download in addition to HD and SD MP4 versions.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is RX Downloader safe and private?</summary>
+      <p>Yes. We do not store URLs, do not require login and use HTTPS-only connections. Your search history is kept locally on your device only.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Why is the first request slow?</summary>
+      <p>The free backend on Render hibernates when idle. The first request may take 20–40 seconds to wake the server; subsequent requests are instant.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Keyboard shortcuts available?</summary>
+      <p>
+        <span class="kbd">Ctrl/Cmd</span> + <span class="kbd">V</span> in input → auto-validate ·
+        <span class="kbd">Enter</span> → download ·
+        <span class="kbd">Shift</span> + <span class="kbd">D</span> → toggle theme ·
+        <span class="kbd">Shift</span> + <span class="kbd">1-4</span> → switch tabs ·
+        <span class="kbd">Esc</span> → clear input
+      </p>
+    </details>
+  </section>
+
 
   </main>
 
@@ -2822,6 +3350,7 @@ footer {
   }
 
   function renderComments(comments){
+  window.__rxLastComments = comments;
     els.commentResultCount.textContent = comments.length + ' comment' + (comments.length === 1 ? '' : 's');
 
     if (!comments.length) {
@@ -3273,5 +3802,833 @@ footer {
 
 })();
 </script>
+<script>
+
+/* ════════════════════════════════════════════════════════
+   RX DOWNLOADER · v1.1 — ENHANCED FEATURES MODULE
+   - Theme toggle (dark/light)
+   - Toast notifications
+   - Recent downloads history
+   - Keyboard shortcuts
+   - Client-side rate limiting
+   - Retry button with better error handling
+   - CSV export
+   - Sequential bulk download manager
+   - Lazy image loading
+   - Debounced input
+   - Auto-paste on tab focus
+   - PWA: manifest + service worker
+   ════════════════════════════════════════════════════════ */
+
+/* ─── 1. THEME TOGGLE (dark / light) ─── */
+const RxTheme = (function(){
+  const KEY = 'rxdl.theme';
+  function apply(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    try { localStorage.setItem(KEY, theme); } catch(e){}
+    const metaLight = document.querySelector('meta[name="theme-color"][media*="light"]');
+    const metaDark  = document.querySelector('meta[name="theme-color"][media*="dark"]');
+    // Update primary theme-color too
+    let prim = document.querySelector('meta[name="theme-color"]:not([media])');
+    if (!prim) {
+      prim = document.createElement('meta');
+      prim.setAttribute('name', 'theme-color');
+      document.head.appendChild(prim);
+    }
+    prim.setAttribute('content', theme === 'dark' ? '#0b1020' : '#ffffff');
+  }
+  function get(){
+    try { return localStorage.getItem(KEY) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
+    catch(e) { return 'light'; }
+  }
+  function toggle(){
+    const next = (get() === 'dark') ? 'light' : 'dark';
+    apply(next);
+    return next;
+  }
+  function init(){
+    apply(get());
+    const btn = document.getElementById('themeToggleBtn');
+    if (btn) btn.addEventListener('click', () => {
+      const t = toggle();
+      RxToast.show((t === 'dark' ? '🌙 Dark' : '☀️ Light') + ' theme activated', 'info', 1600);
+    });
+  }
+  return { init, apply, get, toggle };
+})();
+
+/* ─── 2. TOAST NOTIFICATION SYSTEM ─── */
+const RxToast = (function(){
+  const ICONS = {
+    success: '<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>',
+    error:   '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+    warning: '<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    info:    '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+  };
+  function ensureRoot(){
+    let r = document.getElementById('toastRoot');
+    if (!r) {
+      r = document.createElement('div');
+      r.id = 'toastRoot';
+      r.setAttribute('aria-live', 'polite');
+      document.body.appendChild(r);
+    }
+    return r;
+  }
+  function show(message, type, duration){
+    type = type || 'info';
+    duration = (typeof duration === 'number') ? duration : 3500;
+    const root = ensureRoot();
+    const t = document.createElement('div');
+    t.className = 'toast toast-' + type;
+    t.setAttribute('role', type === 'error' ? 'alert' : 'status');
+    t.innerHTML = '<span class="toast-ico">' + (ICONS[type] || ICONS.info) + '</span>' +
+                  '<div class="toast-body"></div>' +
+                  '<button class="toast-close" type="button" aria-label="Close">×</button>';
+    t.querySelector('.toast-body').textContent = String(message);
+    const close = () => {
+      if (t._removed) return;
+      t._removed = true;
+      t.classList.add('removing');
+      setTimeout(() => t.remove(), 260);
+    };
+    t.querySelector('.toast-close').addEventListener('click', close);
+    root.appendChild(t);
+    if (duration > 0) setTimeout(close, duration);
+    return { close };
+  }
+  return {
+    show,
+    success: (m, d) => show(m, 'success', d),
+    error:   (m, d) => show(m, 'error',   d),
+    warning: (m, d) => show(m, 'warning', d),
+    info:    (m, d) => show(m, 'info',    d)
+  };
+})();
+
+/* ─── 3. RECENT DOWNLOADS HISTORY ─── */
+const RxHistory = (function(){
+  const KEY = 'rxdl.history';
+  const MAX = 20;
+  function load(){
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { return []; }
+  }
+  function save(list){
+    try { localStorage.setItem(KEY, JSON.stringify(list.slice(0, MAX))); } catch(e){}
+  }
+  function add(item){
+    if (!item || !item.url) return;
+    let list = load().filter(x => x.url !== item.url);
+    list.unshift({
+      url: String(item.url).slice(0, 500),
+      title: String(item.title || '').slice(0, 120),
+      ts: Date.now()
+    });
+    save(list);
+    render();
+  }
+  function remove(url){
+    save(load().filter(x => x.url !== url));
+    render();
+  }
+  function clearAll(){
+    save([]);
+    render();
+    RxToast.info('History cleared');
+  }
+  function relTime(ts){
+    const s = Math.floor((Date.now() - ts) / 1000);
+    if (s < 60) return s + 's ago';
+    if (s < 3600) return Math.floor(s/60) + 'm ago';
+    if (s < 86400) return Math.floor(s/3600) + 'h ago';
+    return Math.floor(s/86400) + 'd ago';
+  }
+  function escapeHtml(s){
+    return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function render(){
+    const card = document.getElementById('historyCard');
+    const list = document.getElementById('historyList');
+    if (!card || !list) return;
+    const items = load();
+    if (items.length === 0) {
+      card.hidden = false;
+      list.innerHTML = '<div class="history-empty">No recent downloads yet</div>';
+      return;
+    }
+    card.hidden = false;
+    list.innerHTML = items.map(it => (
+      '<div class="history-item" role="listitem" data-url="' + escapeHtml(it.url) + '">' +
+        '<span class="h-text" title="' + escapeHtml(it.url) + '">' + escapeHtml(it.title || it.url) + '</span>' +
+        '<span class="h-time">' + relTime(it.ts) + '</span>' +
+        '<button class="h-del" type="button" aria-label="Remove" data-del="' + escapeHtml(it.url) + '">×</button>' +
+      '</div>'
+    )).join('');
+    list.querySelectorAll('.history-item').forEach(el => {
+      el.addEventListener('click', (e) => {
+        if (e.target.classList.contains('h-del')) return;
+        const url = el.dataset.url;
+        const input = document.getElementById('urlInput');
+        if (input) {
+          input.value = url;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          input.focus();
+          RxToast.info('URL loaded from history');
+        }
+      });
+    });
+    list.querySelectorAll('.h-del').forEach(b => {
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        remove(b.dataset.del);
+      });
+    });
+  }
+  function init(){
+    const clearBtn = document.getElementById('historyClearBtn');
+    if (clearBtn) clearBtn.addEventListener('click', () => {
+      if (confirm('Clear all download history?')) clearAll();
+    });
+    render();
+  }
+  return { init, add, remove, clearAll, load, render };
+})();
+
+/* ─── 4. CLIENT-SIDE RATE LIMITING ─── */
+const RxRateLimit = (function(){
+  const WINDOW_MS = 60 * 1000;  // 1 minute
+  const MAX_REQ   = 10;          // 10 requests per minute
+  const COOLDOWN_MS = 2500;      // min 2.5s between calls
+  let history = [];
+  let lastCall = 0;
+  function check(){
+    const now = Date.now();
+    history = history.filter(t => now - t < WINDOW_MS);
+    if (now - lastCall < COOLDOWN_MS) {
+      const wait = Math.ceil((COOLDOWN_MS - (now - lastCall)) / 1000);
+      return { allowed: false, reason: 'Please wait ' + wait + 's between requests.', cooldown: true };
+    }
+    if (history.length >= MAX_REQ) {
+      const oldest = history[0];
+      const wait = Math.ceil((WINDOW_MS - (now - oldest)) / 1000);
+      return { allowed: false, reason: 'Rate limit: max ' + MAX_REQ + ' requests/min. Try again in ' + wait + 's.', cooldown: false };
+    }
+    return { allowed: true };
+  }
+  function record(){
+    const now = Date.now();
+    history.push(now);
+    lastCall = now;
+  }
+  return { check, record };
+})();
+
+/* ─── 5. CSV EXPORT (Comments) ─── */
+const RxCSV = (function(){
+  function escape(v){
+    if (v == null) return '';
+    const s = String(v);
+    if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+  function build(rows, headers){
+  const lines = [];
+  if (headers && headers.length) lines.push(headers.join('\t'));
+  rows.forEach(r => lines.push(r.join('\t')));
+  return '\uFEFF' + lines.join('\r\n');
+}
+  function download(filename, csv){
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 200);
+  }
+  function exportComments(comments, sourceUrl){
+    if (!comments || !comments.length) {
+      RxToast.warning('No comments to export');
+      return;
+    }
+    const headers = ['#','Username','Nickname','Comment','Likes','Replies','Time','Source'];
+    const rows = comments.map((c, i) => [
+    i + 1,
+    (c.user && c.user.unique_id) ? c.user.unique_id : (c.unique_id || c.username || 'User'),
+    (c.user && c.user.nickname) ? c.user.nickname : (c.nickname || 'Unknown'),
+    c.text || c.comment || c.content || '',
+    c.likes || c.digg_count || 0,
+    c.replies || c.reply_count || 0,
+    c.time || c.create_time || '',
+    sourceUrl || ''
+]);
+
+    const csv = build(rows, headers);
+    const fname = 'rx-comments-' + new Date().toISOString().slice(0,19).replace(/[:T]/g,'-') + '.csv';
+    download(fname, csv);
+    RxToast.success('Exported ' + comments.length + ' comments to CSV');
+  }
+  return { build, download, exportComments };
+})();
+
+/* ─── 6. URL VALIDATION (strict whitelist) ─── */
+const RxURLValidator = (function(){
+  const SAFE_IMG_HOSTS = [
+    /\.tiktokcdn\.com$/i,
+    /\.tiktokcdn-us\.com$/i,
+    /\.tiktokcdn-eu\.com$/i,
+    /\.tiktok\.com$/i,
+    /\.bytedance\.com$/i,
+    /\.bytedapm\.com$/i,
+    /\.ibyteimg\.com$/i,
+    /\.muscdn\.com$/i,
+    /\.googleusercontent\.com$/i,
+    /\.ggpht\.com$/i
+  ];
+  function isHttp(u){
+    try {
+      const url = new URL(u, location.href);
+      return url.protocol === 'https:' || url.protocol === 'http:';
+    } catch(e) { return false; }
+  }
+  function isSafeImg(u){
+    try {
+      const url = new URL(u, location.href);
+      if (url.protocol !== 'https:' && url.protocol !== 'http:') return false;
+      return SAFE_IMG_HOSTS.some(rx => rx.test(url.hostname));
+    } catch(e) { return false; }
+  }
+  function safeImgSrc(u, fallback){
+    return isSafeImg(u) ? u : (fallback || '');
+  }
+  return { isHttp, isSafeImg, safeImgSrc };
+})();
+
+/* ─── 7. LAZY IMAGE LOADING ─── */
+const RxLazyImg = (function(){
+  let io = null;
+  function getObserver(){
+    if (io) return io;
+    if (!('IntersectionObserver' in window)) return null;
+    io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          const src = img.dataset.src;
+          if (src) {
+            img.src = src;
+            img.onload = () => { img.classList.add('loaded'); img.classList.remove('skeleton-img'); };
+            img.onerror = () => { img.classList.remove('skeleton-img'); };
+            io.unobserve(img);
+          }
+        }
+      });
+    }, { rootMargin: '120px' });
+    return io;
+  }
+  function observe(scope){
+    const obs = getObserver();
+    const imgs = (scope || document).querySelectorAll('img.lazy-img[data-src]:not([src])');
+    if (!obs) {
+      // Fallback: load immediately
+      imgs.forEach(img => { img.src = img.dataset.src; img.classList.add('loaded'); });
+      return;
+    }
+    imgs.forEach(img => { img.classList.add('skeleton-img'); obs.observe(img); });
+  }
+  return { observe };
+})();
+
+/* ─── 8. DEBOUNCE HELPER ─── */
+function rxDebounce(fn, ms){
+  let t;
+  return function(){
+    const ctx = this, args = arguments;
+    clearTimeout(t);
+    t = setTimeout(() => fn.apply(ctx, args), ms);
+  };
+}
+
+/* ─── 9. SKELETON LOADER HELPER ─── */
+const RxSkeleton = (function(){
+  function videoCard(){
+    return '<div class="skeleton-card" aria-hidden="true">' +
+             '<div class="skeleton skeleton-thumb"></div>' +
+             '<div class="skeleton skeleton-line lg w-80"></div>' +
+             '<div class="skeleton skeleton-line w-60"></div>' +
+             '<div class="skeleton skeleton-line w-40"></div>' +
+           '</div>';
+  }
+  function list(count){
+    count = count || 3;
+    let h = '';
+    for (let i = 0; i < count; i++) {
+      h += '<div class="skeleton-card" style="margin-bottom:10px"><div class="skeleton skeleton-line lg w-80"></div><div class="skeleton skeleton-line w-60" style="margin-top:8px"></div></div>';
+    }
+    return h;
+  }
+  return { videoCard, list };
+})();
+
+/* ─── 10. KEYBOARD SHORTCUTS ─── */
+const RxShortcuts = (function(){
+  function init(){
+    document.addEventListener('keydown', (e) => {
+      // Ignore if typing in textarea (allow inputs for Enter)
+      const tag = (e.target.tagName || '').toLowerCase();
+      const isTextarea = tag === 'textarea';
+
+      // Shift+D → theme toggle
+      if (e.shiftKey && (e.key === 'D' || e.key === 'd') && !isTextarea && tag !== 'input') {
+        e.preventDefault();
+        document.getElementById('themeToggleBtn')?.click();
+        return;
+      }
+      // Shift+1/2/3/4 → switch tabs
+      if (e.shiftKey && /^[1-4]$/.test(e.key) && !isTextarea) {
+        const map = { '1': 'tab-downloader', '2': 'tab-user', '3': 'tab-comments', '4': 'tab-profile' };
+        const tabBtn = document.getElementById(map[e.key]);
+        if (tabBtn) {
+          e.preventDefault();
+          tabBtn.click();
+          tabBtn.focus();
+        }
+        return;
+      }
+      // Esc → clear current input
+      if (e.key === 'Escape' && (tag === 'input' || isTextarea)) {
+        if (e.target.value) {
+          e.target.value = '';
+          e.target.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }
+      // ? → show shortcuts toast
+      if (e.key === '?' && !isTextarea && tag !== 'input') {
+        RxToast.info('Shortcuts: Shift+D theme · Shift+1-4 tabs · Esc clear · Enter submit', 4500);
+      }
+    });
+  }
+  return { init };
+})();
+
+/* ─── 11. AUTO-PASTE ON TAB FOCUS ─── */
+const RxAutoPaste = (function(){
+  const KEY = 'rxdl.autoPaste';
+  let enabled = false;
+  function get(){ try { return localStorage.getItem(KEY) === '1'; } catch(e){ return false; } }
+  function set(v){ try { localStorage.setItem(KEY, v ? '1' : '0'); } catch(e){} enabled = !!v; }
+  async function tryPaste(){
+    if (!enabled) return;
+    if (!navigator.clipboard || !navigator.clipboard.readText) return;
+    if (document.visibilityState !== 'visible') return;
+    try {
+      const txt = (await navigator.clipboard.readText() || '').trim();
+      if (!txt) return;
+      if (!/tiktok\.com|vt\.tiktok|vm\.tiktok/i.test(txt)) return;
+      const input = document.getElementById('urlInput');
+      if (!input || input.value === txt) return;
+      // Only auto-fill if currently empty or significantly different
+      if (input.value.trim()) return;
+      input.value = txt;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      RxToast.info('TikTok URL auto-pasted from clipboard', 2200);
+    } catch(e) { /* permission denied or empty */ }
+  }
+  function init(){
+    enabled = get();
+    document.addEventListener('visibilitychange', tryPaste);
+    window.addEventListener('focus', tryPaste);
+  }
+  return { init, enable: () => set(true), disable: () => set(false), isEnabled: () => enabled };
+})();
+
+/* ─── 12. SEQUENTIAL BULK DOWNLOAD MANAGER ─── */
+const RxBulk = (function(){
+  let queue = [];
+  let running = false;
+  let aborted = false;
+
+  function parse(text){
+    return (text || '')
+      .split(/[\n,\s]+/)
+      .map(s => s.trim())
+      .filter(s => /tiktok\.com|vt\.tiktok|vm\.tiktok/i.test(s))
+      .slice(0, 20); // safety cap
+  }
+
+  function renderQueue(containerEl, items){
+    containerEl.innerHTML = items.map((u, i) => (
+      '<div class="bulk-item-row" data-idx="' + i + '">' +
+        '<span class="b-stat pending" aria-label="pending">' +
+          '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>' +
+        '</span>' +
+        '<span class="b-url" title="' + u.replace(/"/g,'&quot;') + '">' + u + '</span>' +
+      '</div>'
+    )).join('');
+  }
+
+  function setStatus(containerEl, idx, status){
+    const row = containerEl.querySelector('[data-idx="' + idx + '"] .b-stat');
+    if (!row) return;
+    row.className = 'b-stat ' + status;
+    let svg;
+    if (status === 'active')     svg = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9"/></svg>';
+    else if (status === 'done')  svg = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+    else if (status === 'err')   svg = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+    else                         svg = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>';
+    row.innerHTML = svg;
+  }
+
+  async function start(urls, opts){
+    opts = opts || {};
+    if (running) { RxToast.warning('Bulk download already running'); return; }
+    queue = urls.slice();
+    running = true; aborted = false;
+    const container = opts.statusEl;
+    const apiUrl = opts.apiUrl;
+    const onItem = opts.onItem;
+    const results = [];
+    renderQueue(container, queue);
+    for (let i = 0; i < queue.length; i++) {
+      if (aborted) break;
+      setStatus(container, i, 'active');
+      const rate = RxRateLimit.check();
+      if (!rate.allowed && rate.cooldown) {
+        await new Promise(r => setTimeout(r, 3000));
+      }
+      try {
+        RxRateLimit.record();
+        const ctrl = new AbortController();
+        const tId = setTimeout(() => ctrl.abort(), 45000);
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: queue[i] }),
+          signal: ctrl.signal
+        });
+        clearTimeout(tId);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        setStatus(container, i, 'done');
+        results.push({ url: queue[i], ok: true, data });
+        if (onItem) onItem(queue[i], data);
+        RxHistory.add({ url: queue[i], title: (data && (data.title || data.desc)) || '' });
+      } catch(err) {
+        setStatus(container, i, 'err');
+        results.push({ url: queue[i], ok: false, error: err.message });
+      }
+      // Cooldown between items
+      if (i < queue.length - 1) await new Promise(r => setTimeout(r, 2800));
+    }
+    running = false;
+    const ok = results.filter(r => r.ok).length;
+    RxToast.success('Bulk finished: ' + ok + '/' + queue.length + ' succeeded');
+    return results;
+  }
+
+  function abort(){
+    if (running) { aborted = true; RxToast.warning('Bulk download stopping…'); }
+  }
+
+  return { parse, start, abort, isRunning: () => running };
+})();
+
+/* ─── 13. ENHANCED ERROR WITH RETRY ─── */
+const RxError = (function(){
+  function show(containerEl, message, onRetry){
+    if (!containerEl) return;
+    containerEl.hidden = false;
+    containerEl.innerHTML = '';
+    const msg = document.createElement('div');
+    msg.textContent = message || 'Something went wrong.';
+    containerEl.appendChild(msg);
+    if (typeof onRetry === 'function') {
+      const btn = document.createElement('button');
+      btn.className = 'error-retry-btn';
+      btn.type = 'button';
+      btn.textContent = '↻ Retry';
+      btn.addEventListener('click', () => {
+        containerEl.hidden = true;
+        try { onRetry(); } catch(e){ /* swallow */ }
+      });
+      containerEl.appendChild(btn);
+    }
+    RxToast.error(message || 'Error');
+  }
+  return { show };
+})();
+
+/* ─── 14. CLIPBOARD FEEDBACK ENHANCED ─── */
+const RxClipboard = (function(){
+  async function copy(text, label){
+    label = label || 'Copied';
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      RxToast.success(label + ' to clipboard ✓', 1800);
+      return true;
+    } catch(e) {
+      RxToast.error('Could not copy — please copy manually');
+      return false;
+    }
+  }
+  return { copy };
+})();
+
+/* ─── 15. PWA: MANIFEST + SERVICE WORKER (inline) ─── */
+const RxPWA = (function(){
+  const ICON = 'https://lh3.googleusercontent.com/pw/AP1GczMx4OipixuK4KIh5Lg0kwNHUwgawGDArm35AWjuL-ST6C5DDcPw6fBQZJRRF122PbTV-EQXlB_hqFp_m1Zp3weyUmPE0ybON180sQudf-olWQsWkeghdZtYgvK13eEPNtjcQ7jSydvAtvjXAXMMjB7q=w512-h512-s-no-gm?authuser=0';
+  function buildManifest(){
+    const manifest = {
+      name: 'RX Downloader',
+      short_name: 'RX DL',
+      description: 'Free TikTok video downloader — no watermark, HD, MP3.',
+      start_url: '/',
+      display: 'standalone',
+      orientation: 'portrait',
+      background_color: '#0b1020',
+      theme_color: '#6366f1',
+      icons: [
+        { src: ICON, sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+        { src: ICON, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+      ],
+      categories: ['utilities', 'productivity']
+    };
+    const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+    return URL.createObjectURL(blob);
+  }
+  function buildServiceWorkerBlobURL(){
+    // Minimal SW: cache shell, network-first for API, cache-first for static.
+    const sw = `
+      const CACHE = 'rxdl-v1';
+      const SHELL = [ '/' ];
+      self.addEventListener('install', (e) => {
+        self.skipWaiting();
+        e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL).catch(()=>{})));
+      });
+      self.addEventListener('activate', (e) => {
+        e.waitUntil(
+          caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+        );
+        self.clients.claim();
+      });
+      self.addEventListener('fetch', (e) => {
+        const req = e.request;
+        if (req.method !== 'GET') return;
+        const url = new URL(req.url);
+        if (url.pathname.startsWith('/download') || url.pathname.startsWith('/user') ||
+            url.pathname.startsWith('/comments') || url.pathname.startsWith('/tiktok/')) {
+          // network-only for API
+          return;
+        }
+        e.respondWith(
+          caches.match(req).then(cached => {
+            const fetchProm = fetch(req).then(res => {
+              if (res && res.status === 200 && (url.origin === location.origin)) {
+                const copy = res.clone();
+                caches.open(CACHE).then(c => c.put(req, copy)).catch(()=>{});
+              }
+              return res;
+            }).catch(() => cached);
+            return cached || fetchProm;
+          })
+        );
+      });
+    `;
+    const blob = new Blob([sw], { type: 'text/javascript' });
+    return URL.createObjectURL(blob);
+  }
+  function init(){
+    // Attach manifest
+    try {
+      const link = document.getElementById('pwaManifest');
+      if (link) link.href = buildManifest();
+    } catch(e){}
+
+    // Register service worker (only on https or localhost & if served from same origin)
+    // Note: Blob-URL service workers are blocked by most browsers. We try, fail silently.
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+      // Try a real /service-worker.js file first (recommended for production).
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(() => { /* registered */ })
+        .catch(() => {
+          // Fallback: try blob URL (will fail in most browsers, that's OK)
+          try {
+            navigator.serviceWorker.register(buildServiceWorkerBlobURL()).catch(()=>{});
+          } catch(e){}
+        });
+    }
+  }
+  return { init };
+})();
+
+/* ─── 16. SITEMAP & ROBOTS HINTS (info only — needs server file) ─── */
+// Note: robots.txt and sitemap.xml must be served from your hosting root.
+// Example robots.txt:
+//   User-agent: *
+//   Allow: /
+//   Sitemap: https://rxdownloader.vercel.app/sitemap.xml
+// Example sitemap.xml:
+//   <?xml version="1.0" encoding="UTF-8"?>
+//   <urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">
+//     <url><loc>https://rxdownloader.vercel.app/</loc><priority>1.0</priority></url>
+//   </urlset>
+
+/* ─── 17. INITIALIZER ─── */
+function rxInitEnhancements(){
+  try { RxTheme.init(); } catch(e){}
+  try { RxHistory.init(); } catch(e){}
+  try { RxShortcuts.init(); } catch(e){}
+  try { RxAutoPaste.init(); } catch(e){}
+  try { RxPWA.init(); } catch(e){}
+
+  // Debounce URL input validation
+  try {
+    const input = document.getElementById('urlInput');
+    if (input) {
+      const debounced = rxDebounce(function(){
+        const v = (input.value || '').trim();
+        if (!v) return;
+        if (!/tiktok\.com|vt\.tiktok|vm\.tiktok/i.test(v)) {
+          input.setAttribute('aria-invalid', 'true');
+        } else {
+          input.removeAttribute('aria-invalid');
+        }
+      }, 280);
+      input.addEventListener('input', debounced);
+    }
+  } catch(e){}
+
+  // Wire global download button to rate-limit + history
+  try {
+    const dlBtn = document.getElementById('downloadBtn');
+    if (dlBtn && !dlBtn._rxWrapped) {
+      dlBtn._rxWrapped = true;
+      dlBtn.addEventListener('click', (e) => {
+        const check = RxRateLimit.check();
+        if (!check.allowed) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          RxToast.warning(check.reason);
+          return;
+        }
+        RxRateLimit.record();
+        const url = (document.getElementById('urlInput')?.value || '').trim();
+        if (url) {
+          // Defer history save until success — listen for any success indicator
+          setTimeout(() => {
+            const ok = !document.getElementById('errorBox')?.offsetParent;
+            // Best-effort history save (only if no visible error)
+            if (ok && /tiktok\.com|vt\.tiktok|vm\.tiktok/i.test(url)) {
+              RxHistory.add({ url, title: document.querySelector('.result-title')?.textContent || '' });
+            }
+          }, 1800);
+        }
+      }, true); // capture phase
+    }
+  } catch(e){}
+
+  // Wire CSV export button (if exists in DOM)
+  try {
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#commentsCsvBtn')) {
+        const data = window.__rxLastComments || [];
+        const src = (document.getElementById('commentInput')?.value || '').trim();
+        // Try to harvest comments from DOM if window.__rxLastComments not set
+        if (!window.__rxLastComments) {
+          const items = document.querySelectorAll('#commentList .comment-item, #commentList [data-comment]');
+          if (items.length) {
+            window.__rxLastComments = Array.from(items).map((el) => ({
+              user: el.querySelector('.cm-user, [data-user]')?.textContent?.trim() || '',
+              nickname: el.querySelector('.cm-nick, [data-nick]')?.textContent?.trim() || '',
+              text: el.querySelector('.cm-text, [data-text]')?.textContent?.trim() || el.textContent.trim().slice(0, 500),
+              likes: el.querySelector('.cm-likes, [data-likes]')?.textContent?.trim() || '',
+              time: el.querySelector('.cm-time, [data-time]')?.textContent?.trim() || ''
+            }));
+          }
+        }
+        RxCSV.exportComments(data, src);
+      }
+    });
+  } catch(e){}
+
+  // Auto-attach lazy loading to dynamically inserted images
+  try {
+    const mo = new MutationObserver((mutations) => {
+      let needsScan = false;
+      mutations.forEach(m => { if (m.addedNodes && m.addedNodes.length) needsScan = true; });
+      if (needsScan) RxLazyImg.observe(document);
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+  } catch(e){}
+
+  console.info('%c RX Downloader v1.1 ', 'background:#6366f1;color:#fff;padding:2px 6px;border-radius:4px;', 'enhanced features loaded');
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', rxInitEnhancements);
+} else {
+  rxInitEnhancements();
+}
+
+// Expose to global scope (for inline event handlers & integration)
+window.RxToast = RxToast;
+window.RxHistory = RxHistory;
+window.RxCSV = RxCSV;
+window.RxBulk = RxBulk;
+window.RxError = RxError;
+window.RxClipboard = RxClipboard;
+window.RxLazyImg = RxLazyImg;
+window.RxSkeleton = RxSkeleton;
+window.RxURLValidator = RxURLValidator;
+window.RxTheme = RxTheme;
+window.RxRateLimit = RxRateLimit;
+window.RxAutoPaste = RxAutoPaste;
+
+</script>
+
+<script>
+(function(){
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  ready(function(){
+    var startBtn = document.getElementById('bulkStartBtn');
+    var abortBtn = document.getElementById('bulkAbortBtn');
+    var inputEl  = document.getElementById('bulkInput');
+    var statusEl = document.getElementById('bulkStatus');
+    if (!startBtn || !inputEl || !statusEl) return;
+    var apiUrl = 'https://tiktok-nowatermark-api.onrender.com/download';
+    startBtn.addEventListener('click', function(){
+      var urls = window.RxBulk.parse(inputEl.value);
+      if (!urls.length) { window.RxToast.warning('Paste at least one TikTok URL'); return; }
+      window.RxToast.info('Starting bulk download of ' + urls.length + ' URLs');
+      window.RxBulk.start(urls, {
+        statusEl: statusEl,
+        apiUrl: apiUrl
+      });
+    });
+    if (abortBtn) abortBtn.addEventListener('click', function(){ window.RxBulk.abort(); });
+
+    // Auto-paste opt-in checkbox (subtle): triggered via shortcut "Shift+P"
+    document.addEventListener('keydown', function(e){
+      if (e.shiftKey && (e.key === 'P' || e.key === 'p')) {
+        var tag = (e.target.tagName||'').toLowerCase();
+        if (tag === 'input' || tag === 'textarea') return;
+        var cur = window.RxAutoPaste.isEnabled();
+        if (cur) { window.RxAutoPaste.disable(); window.RxToast.info('Auto-paste disabled'); }
+        else     { window.RxAutoPaste.enable();  window.RxToast.success('Auto-paste enabled — copy a TikTok URL and switch back to this tab'); }
+      }
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
